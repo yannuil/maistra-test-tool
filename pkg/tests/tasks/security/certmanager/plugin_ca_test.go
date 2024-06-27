@@ -23,8 +23,8 @@ import (
 
 func TestPluginCaCert(t *testing.T) {
 	test.NewTest(t).Id("T41").Groups(test.Full, test.ARM).Run(func(t test.TestHelper) {
-		//Validate OCP version, this test setup can't be executed in OCP versions less than 4.12
-		//More information in: https://57747--docspreview.netlify.app/openshift-enterprise/latest/service_mesh/v2x/ossm-security.html#ossm-cert-manager-integration-istio_ossm-security
+		// Validate OCP version, this test setup can't be executed in OCP versions less than 4.12
+		// More information in: https://57747--docspreview.netlify.app/openshift-enterprise/latest/service_mesh/v2x/ossm-security.html#ossm-cert-manager-integration-istio_ossm-security
 		smcpVer := env.GetSMCPVersion()
 		if smcpVer.LessThan(version.SMCP_2_4) {
 			t.Skip("istio-csr is not supported in SMCP older than v2.4")
@@ -68,7 +68,7 @@ func TestPluginCaCert(t *testing.T) {
 		t.LogStep("Verify that cacerts secret was detected")
 		retry.UntilSuccess(t, func(t test.TestHelper) {
 			oc.Logs(t, pod.MatchingSelector("app=istiod", meshNamespace), "discovery", assert.OutputContains(
-				"Use plugged-in cert at etc/cacerts/tls.key",
+				"DNS certs use plugged-in cert at etc/cacerts/tls.key",
 				"Istiod detected cacerts secret correctly",
 				"Istiod did not detect cacerts secret"))
 		})
